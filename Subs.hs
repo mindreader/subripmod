@@ -5,7 +5,7 @@ import qualified Prelude as P (read, putStrLn)
 import BasicPrelude hiding (try)
 
 import Data.Attoparsec.ByteString.Char8 (isDigit, isSpace)
-import Data.Attoparsec.Text.Lazy as Atto
+import Data.Attoparsec.Text.Lazy as Atto hiding (option)
 
 import Data.Text.Lazy.Builder (Builder, toLazyText)
 
@@ -74,10 +74,10 @@ main = do
             fullDesc <> progDesc "Adjust the offset and speed that srt (subrip) subtitles are played." <> header "subspeed - adjust subtitle speed and offset"
 
     optionsParser = Options <$>
-      strOption (short 'i' <> long "infile" <> metavar "FILE" <> help "Input file") <*>
-      strOption (short 'o' <> long "outfile" <> metavar "FILE" <> help "Output file") <*>
-      Op.option (long "speedup" <> metavar "FACTOR" <> help "Float indicating speed up (may be negative)" <> reader (pure . Just . P.read) <> value Nothing) <*>
-      Op.option (long "offset" <> metavar "MSEC" <> help "Number of milliseconds to offset subs (non negative)" <> reader (pure . Just . P.read) <> value Nothing)
+      option (short 'i' <> long "infile" <> metavar "FILE" <> help "Input file") <*>
+      option (short 'o' <> long "outfile" <> metavar "FILE" <> help "Output file") <*>
+      option (long "speedup" <> metavar "FACTOR" <> help "Float indicating speed up (may be negative)" <> reader (pure . Just . P.read) <> value Nothing) <*>
+      option (long "offset" <> metavar "MSEC" <> help "Number of milliseconds to offset subs (non negative)" <> reader (pure . Just . P.read) <> value Nothing)
 
 subp :: Atto.Parser SubTitles
 subp = SubTitles <$> many1 subentryp
