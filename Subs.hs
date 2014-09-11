@@ -77,7 +77,7 @@ main = do
       strOption (short 'i' <> long "infile" <> metavar "FILE" <> help "Input file") <*>
       strOption (short 'o' <> long "outfile" <> metavar "FILE" <> help "Output file") <*>
       Op.option (long "speedup" <> metavar "FACTOR" <> help "Float indicating speed up (may be negative)" <> reader (pure . Just . P.read) <> value Nothing) <*>
-      Op.option (long "offset" <> metavar "MSEC" <> help "Number of milliseconds to offset subs (may be negative)" <> reader (pure . Just . P.read) <> value Nothing)
+      Op.option (long "offset" <> metavar "MSEC" <> help "Number of milliseconds to offset subs (non negative)" <> reader (pure . Just . P.read) <> value Nothing)
 
 subp :: Atto.Parser SubTitles
 subp = SubTitles <$> many1 subentryp
